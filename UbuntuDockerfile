@@ -21,4 +21,4 @@ RUN apt-add-repository --yes --update ppa:ansible/ansible && \
     apt-get install -y ansible
 
 # Define default command.
-CMD ["bash"]
+CMD ["/bin/bash"]
