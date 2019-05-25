@@ -17,13 +17,17 @@ RUN yum -y update && \
     yum -y install epel-release gdisk sudo curl gzip jq parted git make ansible python python-six python-yaml python-requests rpm-build
 
 RUN yum -y install python-configobj python-oauthlib python-jsonschema python-jsonpatch e2fsprogs iproute net-tools rsyslog && \
-    yum -y install python-devel python-nose python-httpretty python-mock python-unittest2 python-contextlib2 python-coverage python-tox
+    yum -y install python-devel python-nose python-httpretty python-mock python-unittest2 python-contextlib2 python-coverage python-tox python-pip
 
 VOLUME [ "/sys/fs/cgroup" ]
 
+# install azure cli
 RUN rpm --import https://packages.microsoft.com/keys/microsoft.asc && \
-    echo -e "[azure-cli]\nname=Azure CLI\nbaseurl=https://packages.microsoft.com/yumrepos/azure-cli\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/azure-cli.repo
+    echo -e "[azure-cli]\nname=Azure CLI\nbaseurl=https://packages.microsoft.com/yumrepos/azure-cli\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/azure-cli.repo && \
+    yum -y install azure-cli
 
-RUN yum -y install azure-cli
+# install python kusto sdk
+RUN pip install azure-kusto-data && \
+    pip install azure-kusto-ingest
 
 CMD ["/usr/sbin/init"]
