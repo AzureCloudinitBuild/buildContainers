@@ -20,8 +20,7 @@ RUN apt-add-repository --yes --update ppa:ansible/ansible && \
     apt-get install -y ansible
 
 # install python kusto sdk
-RUN pip3 install azure-kusto-data && \
-    pip3 install azure-kusto-ingest
+RUN pip3 install azure-kusto-data azure-kusto-ingest pytest
 
 # Define default command.
 CMD ["/bin/bash"]
